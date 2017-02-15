@@ -1,0 +1,14 @@
+In R,
+
+library(feather)
+path <- "my_data.feather"
+write_feather(df, path)
+df <- read_feather(path)
+
+
+In python,
+
+import feather
+path = 'my_data.feather'
+feather.write_dataframe(df, path)
+df = feather.read_dataframe(path)

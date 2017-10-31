@@ -1,0 +1,62 @@
+\documentclass[12pt]{article} %%epsfig lets you put in plots
+\usepackage{epsfig,amsfonts,times,color,amsmath, subcaption, float, amsthm, multicol, setspace,indentfirst,graphicx,bm}
+\graphicspath{ {./figures/} }
+
+%% fix figure before section title
+\usepackage{flafter}
+
+%% item space
+\usepackage{enumitem}
+\setlist{nosep}
+
+%% page setup
+%% margin
+\usepackage[margin=1in]{geometry}
+%% line space
+\usepackage{setspace}
+\doublespacing
+%%\addtolength{\parskip}{.5cm}
+
+%% Title setup
+\title{Title}
+\date{today}
+\author{Xiaotian (Kevin) Wu}
+
+%% supplemental figures
+\newcommand{\beginsupplement}{%
+	\setcounter{table}{0}
+	\renewcommand{\thetable}{S\arabic{table}}%
+	\setcounter{figure}{0}
+	\renewcommand{\thefigure}{S\arabic{figure}}%
+}
+
+\begin{document}
+
+%% title page
+\maketitle
+
+
+
+
+
+
+
+
+
+
+%% reference style
+\bibliographystyle{plain}
+\bibliography{cite.bib}
+
+\iffalse
+\beginsupplement
+\section*{Supplemental Figures}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{}
+	\caption{}
+	\label{}
+\end{figure}
+\fi
+
+\end{document}

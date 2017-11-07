@@ -3,9 +3,17 @@ library(parallel)
 tmp <- mclapply(1:runs, function(x) estOne(dat[, x]), mc.cores=cores)
 out <- simplify2array(tmp)
 
-## Function for Windows machine
-# From https://www.r-bloggers.com/implementing-mclapply-on-windows-a-primer-on-embarrassingly-parallel-computation-on-multicore-systems-with-r/
+# or use parallelsugar package
+# https://github.com/nathanvan/parallelsugar
+library(devtools)
+install_github('nathanvan/parallelsugar')
+library(parallelsugar)
+# Then use mclapply as if on a Unix machine.
+# The implementation copies all objects to socket so be aware of memory usage.
 
+
+## Function for Windows machine
+## From https://www.r-bloggers.com/implementing-mclapply-on-windows-a-primer-on-embarrassingly-parallel-computation-on-multicore-systems-with-r/
 ##
 ## mclapply.hack.R
 ##

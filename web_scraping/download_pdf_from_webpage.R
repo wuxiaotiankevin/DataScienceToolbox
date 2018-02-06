@@ -1,6 +1,6 @@
 # download pdf in a page
-url <- 'http://www.icsa.org/icsa/publication/previous-icsa-bulletin-issues' # target url
-odir <- 'C:/Users/Xiatian Wu/Downloads/' # output folder
+url <- 'https://cs.brown.edu/courses/csci1270/lectures.html' # target url
+odir <- 'D:/Dropbox (Brown)/2018Spring/SLBD/sql/' # output folder
 
 # get right lines on page source
 x <- scan(url, what="", sep="<")
@@ -8,10 +8,12 @@ these <- grep('.pdf', x, fixed=T)
 x <- x[these]
 
 # get pdf urls
-idstart <- regexpr('https://icsaimage.files.', x, fixed=T)
+idstart <- regexpr('/static/files', x, fixed=T)
 idend <- regexpr('.pdf', x, fixed=T)
 pdfu <- substr(x, idstart, idend+3)
-
+baseUrl <- "https://cs.brown.edu/courses/csci1270"
+pdfu <- paste0(baseUrl, pdfu)
+  
 # get file names
 filenames <- strsplit(pdfu, '/')
 for (i in 1:length(filenames)) {
@@ -20,5 +22,6 @@ for (i in 1:length(filenames)) {
 
 # download files
 for (i in 1:length(pdfu)) {
-  download.file(pdfu[[i]], paste0(odir, filenames[[i]]), mode="wb")
+  # download.file(pdfu[[i]], paste0(odir, filenames[[i]]), mode="wb")
+  download.file(pdfu[[i]], paste0(odir, sprintf("%02d", i), filenames[[i]]), mode="wb")
 }

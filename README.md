@@ -7,7 +7,7 @@ Nice overview of python programming language: http://www.diveintopython.net/
 Python 3 by the same author: http://www.diveintopython3.net/
 
 ## R
-Introduction with examples to Rcpp: http://adv-r.had.co.nz/Rcpp.html
+Introduction to Rcpp with examples: http://adv-r.had.co.nz/Rcpp.html
 
 
 ## Algorithms

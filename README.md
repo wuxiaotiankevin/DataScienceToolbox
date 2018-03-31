@@ -19,9 +19,12 @@ https://www.youtube.com/playlist?list=PLXFMmlk03Dt5EMI2s2WQBsLsZl7A5HEK6
 
 ## Gaussian Process
 Short non-technical introduction: http://katbailey.github.io/post/gaussian-processes-for-dummies/
+
 Which kernel shall I use? http://www.cs.toronto.edu/~duvenaud/cookbook/index.html
 
 ## Fourier Transform
-Comprehensive lecture by Dr. 
+Comprehensive lecture by Dr. Brad Osgood
+
 Lecture: https://www.youtube.com/playlist?list=PLB24BC7956EE040CD
+
 Website: https://see.stanford.edu/Course/EE261

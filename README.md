@@ -25,6 +25,6 @@ Which kernel shall I use? http://www.cs.toronto.edu/~duvenaud/cookbook/index.htm
 ## Fourier Transform
 Comprehensive lecture by Dr. Brad Osgood
 
-Lecture: https://www.youtube.com/playlist?list=PLB24BC7956EE040CD
+Lectures: https://www.youtube.com/playlist?list=PLB24BC7956EE040CD
 
 Website: https://see.stanford.edu/Course/EE261

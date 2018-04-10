@@ -19,12 +19,6 @@ https://www.youtube.com/playlist?list=PLXFMmlk03Dt5EMI2s2WQBsLsZl7A5HEK6
 
 ## Gaussian Process
 Short non-technical introduction: http://katbailey.github.io/post/gaussian-processes-for-dummies/
-<<<<<<< HEAD
-Which kernel shall I use? http://www.cs.toronto.edu/~duvenaud/cookbook/index.html
-
-## Fisher Information
-Short review: https://cs.stanford.edu/~ppasupat/a9online/1237.html
-=======
 
 Which kernel shall I use? http://www.cs.toronto.edu/~duvenaud/cookbook/index.html
 
@@ -34,4 +28,6 @@ Comprehensive lecture by Dr. Brad Osgood
 Lectures: https://www.youtube.com/playlist?list=PLB24BC7956EE040CD
 
 Website: https://see.stanford.edu/Course/EE261
->>>>>>> 427ef5d1e66b822973c52c8b337351e581a5d4af
+
+## Fisher Information
+Short review: https://cs.stanford.edu/~ppasupat/a9online/1237.html

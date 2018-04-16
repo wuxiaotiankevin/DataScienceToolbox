@@ -1,5 +1,5 @@
 # Data Science Toolbox
-- A collection of useful functions, implementations and templates.
+A collection of useful functions, implementations and templates.
 
 ## Python
 - Nice overview of python programming language: http://www.diveintopython.net/

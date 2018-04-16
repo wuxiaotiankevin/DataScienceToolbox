@@ -25,6 +25,7 @@ Which kernel shall I use? http://www.cs.toronto.edu/~duvenaud/cookbook/index.htm
 ### Bayesian Optimization
 * Python package: https://github.com/fmfn/BayesianOptimization
 * Introduction to GP and BO: https://www.youtube.com/playlist?list=PLE6Wd9FR--EdyJ5lbFl8UuGjecvVw66F6
+
 Course Website: http://www.cs.ubc.ca/~nando/540-2013/lectures.html
 
 

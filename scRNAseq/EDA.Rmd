@@ -1,11 +1,11 @@
 ---
-title: "EDA for scRNAseq Data"
+title: "EDA"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = F, cache = F)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, cache = TRUE)
 ```
 
 This file provides exploratory data analysis for single cell RNA sequencing data using the count matrix and phenotype data as input.
@@ -19,7 +19,7 @@ library(Rtsne)
 library(RColorBrewer)
 library(plyr)
 pca.size <- 5
-libsize.size <- 5
+libsize.size <- 1
 # load data
 # dat is a matrix with genes as rows and cells as columns.
 # pdata is a data frame with cell type specified in pdata$celltype
@@ -57,12 +57,12 @@ fast.pca <- function(data, n.pc = 2, scale = TRUE) {
   if (scale == TRUE) {
     data <- sweep(data, 2, res$scale, FUN = '/')
   }
-
+  
   # svd
   # calculate the first two
   data.svd <- svd(data, nu = n.pc, nv = 0)
   res$x <- data.svd$u %*% diag(data.svd$d[1:n.pc])
-
+  
   return(res)
 }
 
@@ -75,7 +75,7 @@ The data set has `r nrow(dat)` genes and `r ncol(dat)` cells. There are `r sum(T
 There are `r length(unique(pdata$celltype))` different cell types. A table of cell type composition is as follow.
 
 ```{r}
-table(pdata$celltype)
+sort(table(pdata$celltype))
 ```
 
 The next histogram shows the histogram of all counts.
@@ -219,13 +219,13 @@ if (ncol(dat) > 20) {
           las = 2, 
           col = mycolor,
           main="Library size of each sample"
-          )
+  )
   barplot(num.exp.genes, 
           names.arg = names(lib.size), 
           las = 2, 
           col = mycolor, 
           main = "# expressed gene"
-          )
+  )
   barplot(num.exp.genes/nrow(dat)*100, las = 2, col = mycolor, main = "% expressed gene")
 }
 
@@ -234,15 +234,15 @@ if (ncol(dat) > 20) {
 
 PCA plot for each cell is as follow.
 
-```{r, echo=FALSE}
+```{r PCA}
 dat.pca <- dat[which(Total.r>0), ]
 
 # run pca
-# y.pca <- prcomp(t(dat.pca), center = TRUE, scale. = TRUE)
-# ylog2.pca <- prcomp(t(log2(dat.pca+1)), center = TRUE, scale. = TRUE)
+y.pca <- prcomp(t(dat.pca), center = TRUE, scale. = TRUE)
+ylog2.pca <- prcomp(t(log2(dat.pca+1)), center = TRUE, scale. = TRUE)
 
-y.pca <- fast.pca(t(dat.pca))
-ylog2.pca <- fast.pca(t(log2(dat.pca+1)))
+# y.pca <- fast.pca(t(dat.pca))
+# ylog2.pca <- fast.pca(t(log2(dat.pca+1)))
 
 
 # plot pca
@@ -257,7 +257,7 @@ p
 
 tSNE plots.
 
-```{r}
+```{r tSNE}
 # plottSNE
 # input data mat, corresponding pdata mat with celltype column
 # output tSNE plot
@@ -324,12 +324,18 @@ hist(rmax[rmax<10], breaks = 20)
 
 A gene level summary of number of cells expressed and percentage of cell expressed are summarized below. The next scatter plot shows the relationship between percentage of genes expressed and library size (Thousand).
 
-```{r}
+```{r setup colors}
 # colors
-colors <- brewer.pal(length(unique(pdata$celltype)),"Spectral")
-if (length(colors)>length(unique(pdata$celltype))) {
-  colors <- colors[1:length(unique(pdata$celltype))]
+if (length(unique(pdata$celltype)) >= 11) {
+  color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+  colors = sample(color, length(unique(pdata$celltype)))
+} else {
+  colors <- brewer.pal(length(unique(pdata$celltype)),"Spectral")
+  if (length(colors)>length(unique(pdata$celltype))) {
+    colors <- colors[1:length(unique(pdata$celltype))]
+  }
 }
+
 colors <- data.frame(colors, 
                      celltype = unique(as.character(pdata$celltype)))
 colors$colors <- as.character(colors$colors)
@@ -340,7 +346,7 @@ pdata <- pdata[order(pdata$idx), ]
 
 
 
-```{r}
+```{r gene expr vs lib size}
 cutoffs <- seq(0, 10, 2)
 
 for (i in 1:length(cutoffs)) {
@@ -364,28 +370,21 @@ for (i in 1:length(cutoffs)) {
        xlab="% of samples expressed",
        main = "Percent of samples expressed")
   
-  # hist(apply(dat,1,featurei),xlab="# samples expressed",
-  #      breaks=ncol(dat),
-  #      main="Number of samples expressed")
-  # hist(apply(dat,1,featurei)*100/ncol(dat), 
-  #      xlab="% of samples expressed",
-  #      breaks = unique(apply(dat,1,featurei)*100/ncol(dat)), 
-  # main="Percent of samples expressed")
-  
   par(mfrow = c(1, 1))
+  
   gels <- data.frame(x.ge = apply(dat,2,featurei) * 100/nrow(dat),
                      y.ls = apply(dat,2,sum)/10^3, 
                      celltype = pdata$celltype,
                      color= pdata$colors)
+  
   p <- ggplot(gels, aes(y=x.ge, x=y.ls, color=celltype)) +
-    geom_point(size = libsize.size) +
+    geom_point(size = libsize.size, alpha = 0.3) +
     ylab("% of genes expressed") +
     xlab("library size (Thousand)") +
     ggtitle("% Genes Expressed vs. Library Size")
   print(p)
   
 }
-
 ```
 
 
@@ -460,7 +459,7 @@ legend('bottomright', legend = unique(pdata.ecdf$celltype), lty = 1,
 
 We summarize the genes with counts greater than 0 by showing the median and median absolute deviation (MAD) for each gene. MAD is defined as the median for the absolute deviance from the median. In the plots each point represents a gene. Bubble area reflects library size.
 
-```{r ,echo=FALSE}
+```{r}
 # setup the functions
 cutoff <- 0
 # output median after discarding values below cutoff

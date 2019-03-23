@@ -1,0 +1,40 @@
+---
+title: "Sample Size and P-Value"
+author: "Kevin Wu"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The Question
+
+This file illustrates the fact that you could get smaller p-value by increasing sample size.
+
+## The Setup
+Two groups of numbers were drawn from $N(0, 1)$ and $N(0.1, 1)$. T-test was then used for the following hypothesis testing.
+
+$$H_0: \mu_1 = \mu_2$$
+$$H_1: \mu_1 \neq \mu_2$$
+
+We repeated the test 100 times under each sample size.
+
+```{r}
+for (sample.size in c(10, 100, 1000, 1e4)) {
+  p.val <- numeric()
+  for (i in 1:100) {
+    n1 <- n2 <- sample.size
+    
+    x <- c(rnorm(n1, mean = 0), rnorm(n2, mean = 0.1))
+    y <- c(rep(0, n1), rep(1, n2))
+    
+    tmp <- t.test(x~y)
+    p.val <- c(p.val, tmp$p.value)
+  }
+  print(sprintf('sample size: %d, p-value: %.4f.', sample.size, mean(p.val)))
+}
+```
+
+With the same underlying distribution, the p-value decreased as we increased the sample size.

@@ -1,0 +1,7 @@
+brew install imagemagick
+
+# Stack left and right a.png, b.png to c.png
+convert +append a.png b.png c.png
+
+# Stack up and down a.png, b.png to c.png
+convert -append a.png b.png c.png
